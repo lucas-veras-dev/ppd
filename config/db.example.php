@@ -1,5 +1,7 @@
 <?php
+
 #=================================================
+# CRIAR ARQUIVO CHAMADO: db.php
 # PARAMETROS DO BANCO DE DADOS - MYSQL + PDO
 #=================================================
 const HOST_DB = '';

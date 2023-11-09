@@ -1,15 +1,12 @@
 <?php
 require_once('vendor/autoload.php');
 
-use App\Controller\Service\UsuarioService;
+use App\Controller\Service\DesaparecidoService;
 
-$usuarioService = new UsuarioService;
+$desaparecidoService = new DesaparecidoService;
 
-var_dump($usuarioService->listar()->dados);
-
-
-
-
+// listar desaparecidos
+$listarDesaparecido = $desaparecidoService->listar()->dados;
 
 ?>
 <!doctype html>
