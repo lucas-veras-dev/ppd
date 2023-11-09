@@ -5,7 +5,7 @@ use App\Controller\Service\UsuarioService;
 
 $usuarioService = new UsuarioService;
 
-var_dump($usuarioService->listar());
+var_dump($usuarioService->listar()->dados);
 
 
 

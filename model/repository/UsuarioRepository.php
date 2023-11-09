@@ -2,14 +2,18 @@
 
 namespace App\Model\Repository;
 
+use App\Controller\Service\PerfilService;
 use App\Model\UsuarioModel;
 
 class UsuarioRepository extends Repository
 {
+    private PerfilService $perfilService;
+
     public function __construct()
     {
         parent::__construct();
         $this->table = "tb_usuario";
+        $this->perfilService = new PerfilService;
     }
 
     public function convertItemToObject($obj): UsuarioModel
@@ -20,9 +24,8 @@ class UsuarioRepository extends Repository
         $newObj->cpf = $obj->cpf;
         $newObj->dataNascimento = $obj->datanascimento;
         $newObj->email = $obj->email;
-        $newObj->senha = $obj->senha;
         $newObj->situacao = $obj->situacao;
-        $newObj->tbPerfilId = $obj->TB_PERFIL_id;
+        $newObj->perfil = $this->perfilService->listarPorId($obj->TB_PERFIL_id)->dados;
 
         return $newObj;
     }

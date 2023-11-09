@@ -6,6 +6,7 @@ require_once(__DIR__ . '/../../config/db.php');
 
 use PDO;
 use PDOException;
+use stdClass;
 
 abstract class Repository
 {
@@ -16,6 +17,7 @@ abstract class Repository
     public function __construct()
     {
         $this->getConnection();
+        $this->response = new stdClass;
     }
 
     public function __set($name, $value)
@@ -118,20 +120,23 @@ abstract class Repository
 
     public function findById($id)
     {
-        $dados = [];
-        $sql = "SELECT * FROM $this->table WHERE id = :id order by 1";
-
         try {
-            $statement = $this->connectionPdo->prepare($sql);
-            $statement->bindValue(':id', $id);
-            $statement->execute();
-            if ($statement->rowCount() > 0) {
-                $dados = $statement->fetch(PDO::FETCH_OBJ);
+            $sql = "SELECT * FROM {$this->table} WHERE id = :id order by 1";
+
+            $stmt = $this->connectionPdo->prepare($sql);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+            $rowCount = $stmt->rowCount();
+            if ($rowCount != 0) {
+                // montando resposta
+                return $this->response(1, 1003, null, $this->convertItemToObject($stmt->fetchAll(PDO::FETCH_OBJ)[0]));
             }
+
+            // montando resposta
+            return $this->response(0, 9005);
         } catch (PDOException $e) {
-            echo $e->getMessage();
-        } finally {
-            return $dados;
+            // montando resposta
+            return $this->response(0, 9004, null, null, $e->getMessage());
         }
     }
 }

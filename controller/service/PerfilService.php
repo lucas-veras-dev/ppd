@@ -2,15 +2,15 @@
 
 namespace App\Controller\Service;
 
-use App\Model\Repository\UsuarioRepository;
+use App\Model\Repository\PerfilRepository;
 
-class UsuarioService extends Service
+class PerfilService extends Service
 {
-    private UsuarioRepository $usuarioRepository;
+    private PerfilRepository $perfilRepository;
 
     public function __construct()
     {
-        $this->usuarioRepository = new UsuarioRepository;
+        $this->perfilRepository = new PerfilRepository;
     }
 
     public function inserir($obj)
@@ -30,11 +30,11 @@ class UsuarioService extends Service
 
     public function listar()
     {
-        return $this->usuarioRepository->list();
+        return $this->perfilRepository->list();
     }
 
     public function listarPorId(Int $id)
     {
-        return $this->usuarioRepository->listById($id);
+        return $this->perfilRepository->listById($id);
     }
 }
