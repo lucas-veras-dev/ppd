@@ -2,6 +2,8 @@ RewriteEngine On # Turn on the rewriting engine
 
 # Acessar a página principal
 RewriteRule ^/?$ index.php [NC,L]
+# View cadastrar usuário
+RewriteRule ^usuario/cadastrar/?$ view/signup/viewRegisterUser.php [NC,L]
 
 ###### Exemplos de uso ######
 # API Particao
