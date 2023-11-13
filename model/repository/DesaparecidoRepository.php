@@ -2,6 +2,8 @@
 
 namespace App\Model\Repository;
 
+use PDOException;
+
 use App\Controller\Service\CidadeService;
 use App\Controller\Service\UsuarioService;
 use App\Model\DesaparecidoModel;
@@ -40,8 +42,48 @@ class DesaparecidoRepository extends Repository
         return $newObj;
     }
 
-    public function insert($obj)
+    public function insert($obj): Object
     {
+        // desabilitando autocommit
+        parent::autoCommit(0);
+
+        try {
+            $sql = "INSERT INTO {$this->table} 
+            (nome_foto, nome, sexo, datanascimento, localdesaparecimento, descricao,
+            cpf, numeroboletim, telefonecontato, emailcontato, situacao, TB_CIDADE_id,
+            TB_USUARIO_id, arquivo_foto, extensao_foto)
+            VALUES
+            (:nome_foto, :nome, :sexo, :datanascimento, :localdesaparecimento, :descricao,
+            :cpf, :numeroboletim, :telefonecontato, :emailcontato, :situacao, :TB_CIDADE_id,
+            :TB_USUARIO_id, :arquivo_foto, :extensao_foto)";
+
+            $stmt = $this->connectionPdo->prepare($sql);
+            $stmt->bindValue(':nome_foto', $obj->id);
+            $stmt->bindValue(':nome', $obj->cpf);
+            $stmt->bindValue(':sexo', $obj->dataNascimento);
+            $stmt->bindValue(':datanascimento', $obj->email);
+            $stmt->bindValue(':localdesaparecimento', $obj->senha);
+            $stmt->bindValue(':descricao', $obj->perfil->id);
+            $stmt->bindValue(':cpf', $obj->perfil->id);
+            $stmt->bindValue(':numeroboletim', $obj->perfil->id);
+            $stmt->bindValue(':telefonecontato', $obj->perfil->id);
+            $stmt->bindValue(':emailcontato', $obj->perfil->id);
+            $stmt->bindValue(':situacao', $obj->perfil->id);
+            $stmt->bindValue(':TB_CIDADE_id', $obj->perfil->id);
+            $stmt->bindValue(':TB_USUARIO_id', $obj->perfil->id);
+            $stmt->bindValue(':arquivo_foto', $obj->perfil->id);
+            $stmt->bindValue(':extensao_foto', $obj->perfil->id);
+            $stmt->execute();
+
+            // montando resposta
+            return $this->response(1, 1003, parent::getLastId());
+        } catch (PDOException $e) {
+            // montando resposta
+            return $this->response(0, 9004, null, null, $e->getMessage());
+        } finally {
+            // habilitando autocommit
+            parent::autoCommit(1);
+        }
     }
 
     public function update($obj)

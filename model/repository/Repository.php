@@ -139,4 +139,8 @@ abstract class Repository
             return $this->response(0, 9004, null, null, $e->getMessage());
         }
     }
+
+    public function getLastId(){
+        return $this->connectionPdo->lastInsertId();
+    }
 }

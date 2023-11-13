@@ -15,17 +15,15 @@ class UsuarioService extends Service
 
     public function inserir($obj)
     {
-
+        return $this->usuarioRepository->insert($obj);
     }
 
     public function atualizar($obj)
     {
-        
     }
 
     public function excluir(Int $id)
     {
-        
     }
 
     public function listar()
@@ -36,5 +34,10 @@ class UsuarioService extends Service
     public function listarPorId(Int $id)
     {
         return $this->usuarioRepository->listById($id);
+    }
+
+    public function verificarCredenciais($obj)
+    {
+        return $this->usuarioRepository->checkCredentials($obj);
     }
 }

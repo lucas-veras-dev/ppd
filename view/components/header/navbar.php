@@ -15,34 +15,37 @@
 </svg>
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">PPD</a>
+        <a class="navbar-brand" href="/">PPD</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/desaparecido/cadastrar">Cadastrar Desaparecido</a>
-                </li>
+                <?php if (!empty($_SESSION['id'])) : ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/desaparecido/cadastrar">Cadastrar Desaparecido</a>
+                    </li>
+                <?php endif; ?>
             </ul>
             <div class="d-flex">
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                    <a href="/signin" class="btn btn-primary"><i class="fa-solid fa-user"></i> Entrar</a>
-                    <a href="/usuario/cadastrar" class="btn btn-secondary"><i class="fa-solid fa-user-plus"></i> Cadastrar</a>
-
-                    <!-- <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Dropdown
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Dropdown link</a></li>
-                            <li><a class="dropdown-item" href="#">Dropdown link</a></li>
-                        </ul>
-                    </div> -->
+                    <?php if (empty($_SESSION['id'])) : ?>
+                        <a href="/entrar" class="btn btn-primary"><i class="fa-solid fa-user"></i> Entrar</a>
+                        <a href="/usuario/cadastrar" class="btn btn-secondary"><i class="fa-solid fa-user-plus"></i> Cadastrar</a>
+                    <?php else : ?>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i> <?php echo $_SESSION['nome'] ?>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user-pen"></i> Editar</a></li>
+                            </ul>
+                        </div>
+                        <a href="/sair" class="btn btn-danger"><i class="fa-solid fa-power-off"></i> Sair</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

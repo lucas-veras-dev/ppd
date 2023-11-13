@@ -1,4 +1,7 @@
 <?php
+// iniciando sessão
+session_start();
+
 require_once('vendor/autoload.php');
 
 use App\Controller\Service\DesaparecidoService;

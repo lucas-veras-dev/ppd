@@ -8,6 +8,7 @@ class UsuarioModel extends Model
     public String | Null $cpf;
     public String | Null $dataNascimento;
     public String | Null $email;
+    public String | Null $senha;
     public String | Null $situacao;
     public Object | Null $perfil;
 
