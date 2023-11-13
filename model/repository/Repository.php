@@ -107,14 +107,14 @@ abstract class Repository
             $rowCount = $stmt->rowCount();
             if ($rowCount != 0) {
                 // montando resposta
-                return $this->response(1, 1003, null, $this->convertListToObject($stmt->fetchAll(PDO::FETCH_OBJ)));
+                return $this->response(1, 1001, null, $this->convertListToObject($stmt->fetchAll(PDO::FETCH_OBJ)));
             }
 
             // montando resposta
             return $this->response(0, 9005);
         } catch (PDOException $e) {
             // montando resposta
-            return $this->response(0, 9004, null, null, $e->getMessage());
+            return $this->response(0, 9006, null, null, $e->getMessage());
         }
     }
 
@@ -129,14 +129,14 @@ abstract class Repository
             $rowCount = $stmt->rowCount();
             if ($rowCount != 0) {
                 // montando resposta
-                return $this->response(1, 1003, null, $this->convertItemToObject($stmt->fetchAll(PDO::FETCH_OBJ)[0]));
+                return $this->response(1, 1001, null, $this->convertItemToObject($stmt->fetchAll(PDO::FETCH_OBJ)[0]));
             }
 
             // montando resposta
             return $this->response(0, 9005);
         } catch (PDOException $e) {
             // montando resposta
-            return $this->response(0, 9004, null, null, $e->getMessage());
+            return $this->response(0, 9006, null, null, $e->getMessage());
         }
     }
 

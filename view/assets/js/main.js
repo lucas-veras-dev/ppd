@@ -29,3 +29,22 @@ function buscarCidadesPorEstado(idEstado) {
     });
 
 }
+
+function getParams() {
+    const query = location.search.slice(1);
+    const partes = query.split('&');
+    const parametros = {};
+    partes.forEach(function (parte) {
+        const chaveValor = parte.split('=');
+        const chave = chaveValor[0];
+        const valor = chaveValor[1];
+        parametros[chave] = valor;
+    });
+
+    return parametros;
+}
+
+// mostrando mensagem na tela de error ou sucesso
+const parametros = getParams();
+
+imprimirMensagemSwal(parametros['idMsg']);

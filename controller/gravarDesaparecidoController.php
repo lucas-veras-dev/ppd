@@ -41,7 +41,6 @@ $desaparecidoModel->cpf = $_POST['cpf'];
 $desaparecidoModel->numeroBoletim = $_POST['numero_boletim'];
 $desaparecidoModel->telefoneContato = $_POST['telefone_contato'];
 $desaparecidoModel->emailContato = $_POST['email_contato'];
-$desaparecidoModel->situacao = 'A';
 $desaparecidoModel->cidade = $cidadeService->listarPorId($_POST['id_cidade'])->dados;
 $desaparecidoModel->usuario = $usuarioService->listarPorId($_SESSION['id'])->dados;
 

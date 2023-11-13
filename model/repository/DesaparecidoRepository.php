@@ -2,6 +2,7 @@
 
 namespace App\Model\Repository;
 
+use PDO;
 use PDOException;
 
 use App\Controller\Service\CidadeService;
@@ -52,11 +53,11 @@ class DesaparecidoRepository extends Repository
         try {
             $sql = "INSERT INTO {$this->table} 
             (nome_foto, nome, sexo, datanascimento, localdesaparecimento, descricao,
-            cpf, numeroboletim, telefonecontato, emailcontato, situacao, TB_CIDADE_id,
+            cpf, numeroboletim, telefonecontato, emailcontato, TB_CIDADE_id,
             TB_USUARIO_id, arquivo_foto, extensao_foto)
             VALUES
             (:nome_foto, :nome, :sexo, :datanascimento, :localdesaparecimento, :descricao,
-            :cpf, :numeroboletim, :telefonecontato, :emailcontato, :situacao, :TB_CIDADE_id,
+            :cpf, :numeroboletim, :telefonecontato, :emailcontato, :TB_CIDADE_id,
             :TB_USUARIO_id, :arquivo_foto, :extensao_foto)";
 
             $stmt = $this->connectionPdo->prepare($sql);
@@ -70,7 +71,6 @@ class DesaparecidoRepository extends Repository
             $stmt->bindValue(':numeroboletim', $obj->numeroBoletim);
             $stmt->bindValue(':telefonecontato', $obj->telefoneContato);
             $stmt->bindValue(':emailcontato', $obj->emailContato);
-            $stmt->bindValue(':situacao', $obj->situacao);
             $stmt->bindValue(':TB_CIDADE_id', $obj->cidade->id);
             $stmt->bindValue(':TB_USUARIO_id', $obj->usuario->id);
             $stmt->bindValue(':arquivo_foto', $obj->arquivoFoto);
@@ -80,13 +80,13 @@ class DesaparecidoRepository extends Repository
             $this->connectionPdo->commit();
 
             // montando resposta
-            return $this->response(1, 1003, parent::getLastId());
+            return $this->response(1, 1001, parent::getLastId());
         } catch (PDOException $e) {
-            
+
             $this->connectionPdo->rollBack();
 
             // montando resposta
-            return $this->response(0, 9004, null, null, $e->getMessage());
+            return $this->response(0, 9006, null, null, $e->getMessage());
         } finally {
             // habilitando autocommit
             parent::autoCommit(1);
@@ -109,5 +109,58 @@ class DesaparecidoRepository extends Repository
     public function listById(int $id)
     {
         return parent::findById($id);
+    }
+
+    public function listByActive()
+    {
+        try {
+            $sql = "SELECT * FROM {$this->table} where situacao = 'A' order by 1";
+
+            $stmt = $this->connectionPdo->prepare($sql);
+            $stmt->execute();
+            $rowCount = $stmt->rowCount();
+            if ($rowCount != 0) {
+                // montando resposta
+                return $this->response(1, 1001, null, $this->convertListToObject($stmt->fetchAll(PDO::FETCH_OBJ)));
+            }
+
+            // montando resposta
+            return $this->response(0, 9005);
+        } catch (PDOException $e) {
+            // montando resposta
+            return $this->response(0, 9006, null, null, $e->getMessage());
+        }
+    }
+
+    public function changeSituation($situacao, $id): Object
+    {
+        // desabilitando autocommit
+        parent::autoCommit(0);
+
+        try {
+            $sql = "UPDATE {$this->table} SET
+            situacao = :situacao
+            WHERE
+            id = :id";
+
+            $stmt = $this->connectionPdo->prepare($sql);
+            $stmt->bindValue(':id', $id);
+            $stmt->bindValue(':situacao', $situacao);
+            $stmt->execute();
+
+            $this->connectionPdo->commit();
+
+            // montando resposta
+            return $this->response(1, 1002, parent::getLastId());
+        } catch (PDOException $e) {
+
+            $this->connectionPdo->rollBack();
+
+            // montando resposta
+            return $this->response(0, 9003, null, null, $e->getMessage());
+        } finally {
+            // habilitando autocommit
+            parent::autoCommit(1);
+        }
     }
 }

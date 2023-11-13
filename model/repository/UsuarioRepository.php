@@ -56,13 +56,13 @@ class UsuarioRepository extends Repository
             $this->connectionPdo->commit();
 
             // montando resposta
-            return $this->response(1, 1003, parent::getLastId());
+            return $this->response(1, 1001, parent::getLastId());
         } catch (PDOException $e) {
 
             $this->connectionPdo->rollBack();
 
             // montando resposta
-            return $this->response(0, 9004, null, null, $e->getMessage());
+            return $this->response(0, 9006, null, null, $e->getMessage());
         } finally {
             // habilitando autocommit
             parent::autoCommit(1);
@@ -90,7 +90,7 @@ class UsuarioRepository extends Repository
     public function checkCredentials($obj)
     {
         try {
-            $sql = "SELECT * FROM {$this->table} WHERE email = :email and senha = :senha order by 1";
+            $sql = "SELECT * FROM {$this->table} WHERE email = :email and senha = :senha and situacao = 'A' order by 1";
 
             $stmt = $this->connectionPdo->prepare($sql);
             $stmt->bindValue(':email', $obj->email);
@@ -99,14 +99,46 @@ class UsuarioRepository extends Repository
             $rowCount = $stmt->rowCount();
             if ($rowCount != 0) {
                 // montando resposta
-                return $this->response(1, 1003, null, $this->convertItemToObject($stmt->fetchAll(PDO::FETCH_OBJ)[0]));
+                return $this->response(1, 1001, null, $this->convertItemToObject($stmt->fetchAll(PDO::FETCH_OBJ)[0]));
             }
 
             // montando resposta
             return $this->response(0, 9005);
         } catch (PDOException $e) {
             // montando resposta
-            return $this->response(0, 9004, null, null, $e->getMessage());
+            return $this->response(0, 9006, null, null, $e->getMessage());
+        }
+    }
+
+    public function changeSituation($situacao, $id): Object
+    {
+        // desabilitando autocommit
+        parent::autoCommit(0);
+
+        try {
+            $sql = "UPDATE {$this->table} SET
+            situacao = :situacao
+            WHERE
+            id = :id";
+
+            $stmt = $this->connectionPdo->prepare($sql);
+            $stmt->bindValue(':id', $id);
+            $stmt->bindValue(':situacao', $situacao);
+            $stmt->execute();
+
+            $this->connectionPdo->commit();
+
+            // montando resposta
+            return $this->response(1, 1002, parent::getLastId());
+        } catch (PDOException $e) {
+
+            $this->connectionPdo->rollBack();
+
+            // montando resposta
+            return $this->response(0, 9003, null, null, $e->getMessage());
+        } finally {
+            // habilitando autocommit
+            parent::autoCommit(1);
         }
     }
 }

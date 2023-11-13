@@ -24,6 +24,11 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
+                <?php if (isset($_SESSION) && $_SESSION['idPerfil'] == 1) : ?>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/admin?action=listar-usuarios">Admin</a>
+                </li>
+                <?php endif; ?>
                 <?php if (!empty($_SESSION['id'])) : ?>
                     <li class="nav-item">
                         <a class="nav-link" href="/desaparecido/cadastrar">Cadastrar Desaparecido</a>
@@ -40,9 +45,9 @@
                             <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-solid fa-user"></i> <?php echo $_SESSION['nome'] ?>
                             </button>
-                            <ul class="dropdown-menu">
+                            <!-- <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user-pen"></i> Editar</a></li>
-                            </ul>
+                            </ul> -->
                         </div>
                         <a href="/sair" class="btn btn-danger"><i class="fa-solid fa-power-off"></i> Sair</a>
                     <?php endif; ?>

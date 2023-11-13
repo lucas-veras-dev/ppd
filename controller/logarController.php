@@ -19,7 +19,8 @@ $usuarioModel->senha = md5($_POST['senha']);
 $verificaCredenciais = $usuarioService->verificarCredenciais($usuarioModel);
 
 if(!$verificaCredenciais->code){
-    header('Location: /entrar?idMsg=' . $verificaCredenciais->idMsg);
+    header('Location: /entrar?idMsg=' . 9001);
+    exit();
 }
 
 // colocando dados na sessao
@@ -35,7 +36,7 @@ $_SESSION['nomePerfil'] = $verificaCredenciais->dados->perfil->perfil;
 // verificando qual é o perfil e redirecionando
 if($_SESSION['idPerfil'] == 1){
     // admin
-    header('Location: /admin');
+    header('Location: /admin?action=listar-usuarios');
     exit();
 }
 

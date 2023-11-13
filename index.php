@@ -9,7 +9,7 @@ use App\Controller\Service\DesaparecidoService;
 $desaparecidoService = new DesaparecidoService;
 
 // listar desaparecidos
-$listarDesaparecido = $desaparecidoService->listar();
+$listarDesaparecido = $desaparecidoService->listarPorAtivo();
 
 ?>
 <!doctype html>

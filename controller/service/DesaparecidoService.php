@@ -37,4 +37,14 @@ class DesaparecidoService extends Service
     {
         return $this->desaparecidoRepository->listById($id);
     }
+
+    public function listarPorAtivo()
+    {
+        return $this->desaparecidoRepository->listByActive();
+    }
+
+    public function alterarSituacao($situacao, $id)
+    {
+        return $this->desaparecidoRepository->changeSituation($situacao, $id);
+    }
 }

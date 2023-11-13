@@ -7,6 +7,10 @@ RewriteRule ^entrar/?$ view/signin/viewSignIn.php [NC,L]
 # Controller parar sair (deslogar)
 RewriteRule ^sair/?$ controller/sairController.php [NC,L]
 
+# ADMIN
+# Acessar página de admin
+RewriteRule ^admin/?$ view/admin/viewAdmin.php [NC,L]
+
 # USUÁRIO
 # View cadastrar usuário
 RewriteRule ^usuario/cadastrar/?$ view/signup/viewRegisterUser.php [NC,L]

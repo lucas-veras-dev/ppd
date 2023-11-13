@@ -40,4 +40,9 @@ class UsuarioService extends Service
     {
         return $this->usuarioRepository->checkCredentials($obj);
     }
+
+    public function alterarSituacao($situacao, $id)
+    {
+        return $this->usuarioRepository->changeSituation($situacao, $id);
+    }
 }
