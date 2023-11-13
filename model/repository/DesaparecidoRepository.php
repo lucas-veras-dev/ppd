@@ -38,6 +38,8 @@ class DesaparecidoRepository extends Repository
         $newObj->situacao = $obj->situacao;
         $newObj->cidade = $this->cidadeService->listarPorId($obj->TB_CIDADE_id)->dados;
         $newObj->usuario = $this->usuarioService->listarPorId($obj->TB_USUARIO_id)->dados;
+        $newObj->arquivoFoto = $obj->arquivo_foto;
+        $newObj->extensaoFoto = $obj->extensao_foto;
 
         return $newObj;
     }
@@ -58,26 +60,31 @@ class DesaparecidoRepository extends Repository
             :TB_USUARIO_id, :arquivo_foto, :extensao_foto)";
 
             $stmt = $this->connectionPdo->prepare($sql);
-            $stmt->bindValue(':nome_foto', $obj->id);
-            $stmt->bindValue(':nome', $obj->cpf);
-            $stmt->bindValue(':sexo', $obj->dataNascimento);
-            $stmt->bindValue(':datanascimento', $obj->email);
-            $stmt->bindValue(':localdesaparecimento', $obj->senha);
-            $stmt->bindValue(':descricao', $obj->perfil->id);
-            $stmt->bindValue(':cpf', $obj->perfil->id);
-            $stmt->bindValue(':numeroboletim', $obj->perfil->id);
-            $stmt->bindValue(':telefonecontato', $obj->perfil->id);
-            $stmt->bindValue(':emailcontato', $obj->perfil->id);
-            $stmt->bindValue(':situacao', $obj->perfil->id);
-            $stmt->bindValue(':TB_CIDADE_id', $obj->perfil->id);
-            $stmt->bindValue(':TB_USUARIO_id', $obj->perfil->id);
-            $stmt->bindValue(':arquivo_foto', $obj->perfil->id);
-            $stmt->bindValue(':extensao_foto', $obj->perfil->id);
+            $stmt->bindValue(':nome_foto', $obj->nomeFoto);
+            $stmt->bindValue(':nome', $obj->nome);
+            $stmt->bindValue(':sexo', $obj->sexo);
+            $stmt->bindValue(':datanascimento', $obj->dataNascimento);
+            $stmt->bindValue(':localdesaparecimento', $obj->localDesaparecimento);
+            $stmt->bindValue(':descricao', $obj->descricao);
+            $stmt->bindValue(':cpf', $obj->cpf);
+            $stmt->bindValue(':numeroboletim', $obj->numeroBoletim);
+            $stmt->bindValue(':telefonecontato', $obj->telefoneContato);
+            $stmt->bindValue(':emailcontato', $obj->emailContato);
+            $stmt->bindValue(':situacao', $obj->situacao);
+            $stmt->bindValue(':TB_CIDADE_id', $obj->cidade->id);
+            $stmt->bindValue(':TB_USUARIO_id', $obj->usuario->id);
+            $stmt->bindValue(':arquivo_foto', $obj->arquivoFoto);
+            $stmt->bindValue(':extensao_foto', $obj->extensaoFoto);
             $stmt->execute();
+
+            $this->connectionPdo->commit();
 
             // montando resposta
             return $this->response(1, 1003, parent::getLastId());
         } catch (PDOException $e) {
+            
+            $this->connectionPdo->rollBack();
+
             // montando resposta
             return $this->response(0, 9004, null, null, $e->getMessage());
         } finally {

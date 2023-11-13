@@ -37,4 +37,9 @@ class CidadeService extends Service
     {
         return $this->cidadeRepository->listById($id);
     }
+
+    public function listarPorEstado(Int $id)
+    {
+        return $this->cidadeRepository->listByState($id);
+    }
 }

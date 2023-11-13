@@ -54,7 +54,7 @@ $listarDesaparecido = $desaparecidoService->listar();
                         <?php foreach ($listarDesaparecido->dados as $linhas) : ?>
                             <div class="col">
                                 <div class="card h-100">
-                                    <img src="../../assets/images/pessoas/download.jpeg" class="card-img-top card-img-desaparecidos" alt="...">
+                                    <img src="data:<?php echo $linhas->extensaoFoto ?>;base64,<?php echo $linhas->arquivoFoto ?>" class="card-img-top card-img-desaparecidos" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo $linhas->nome ?></h5>
                                         <p class="card-text fw-bold">Local de desaparecimento:</p>

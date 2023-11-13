@@ -53,9 +53,14 @@ class UsuarioRepository extends Repository
             $stmt->bindValue(':TB_PERFIL_id', 2);
             $stmt->execute();
 
+            $this->connectionPdo->commit();
+
             // montando resposta
             return $this->response(1, 1003, parent::getLastId());
         } catch (PDOException $e) {
+
+            $this->connectionPdo->rollBack();
+
             // montando resposta
             return $this->response(0, 9004, null, null, $e->getMessage());
         } finally {

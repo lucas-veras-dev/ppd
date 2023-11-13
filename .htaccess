@@ -15,6 +15,12 @@ RewriteRule ^usuario/gravar/?$ controller/gravarUsuarioController.php [NC,L]
 # Controller logar usuário
 RewriteRule ^usuario/logar/?$ controller/logarController.php [NC,L]
 
+# DESAPARECIDO
+# View cadastrar desaparecido
+RewriteRule ^desaparecido/cadastrar/?$ view/register-missing/viewRegisterMissing.php [NC,L]
+# Controller cadastrar, editar e deletar desaparecido
+RewriteRule ^desaparecido/gravar/?$ controller/gravarDesaparecidoController.php [NC,L]
+
 ###### Exemplos de uso ######
 # API Particao
 ##RewriteRule ^particao/?$ particao.php [NC,L]

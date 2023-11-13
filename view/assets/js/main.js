@@ -8,3 +8,24 @@ function permitirApenasNumeros(event) {
     // Atualiza o valor do campo de entrada apenas com os números
     event.target.value = valorNumerico;
 }
+
+function buscarCidadesPorEstado(idEstado) {
+    const url = window.location.protocol + '//' + window.location.host;
+    const selectCidade = document.getElementById('cidade');
+
+    $.ajax({
+        type: 'POST',
+        url: url + '/ajax/buscarCidadesPorEstado.php',
+        data: {
+            id_estado: idEstado
+        },
+        dataType: "html",
+        success: function (response) {
+            selectCidade.innerHTML = response
+        },
+        error: function (error) {
+            alert('Error ao realizar requisição: ' + error)
+        }
+    });
+
+}

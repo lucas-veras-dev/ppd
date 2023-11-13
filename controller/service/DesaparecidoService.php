@@ -15,7 +15,7 @@ class DesaparecidoService extends Service
 
     public function inserir($obj)
     {
-
+        return $this->desaparecidoRepository->insert($obj);
     }
 
     public function atualizar($obj)
