@@ -71,6 +71,40 @@ class UsuarioRepository extends Repository
 
     public function update($obj)
     {
+        // desabilitando autocommit
+        parent::autoCommit(0);
+
+        try {
+            $sql = "UPDATE {$this->table} SET
+            nome = :nome,
+            cpf = :cpf,
+            datanascimento = :datanascimento,
+            email = :email
+            WHERE
+            id = :id";
+
+            $stmt = $this->connectionPdo->prepare($sql);
+            $stmt->bindValue(':id', $obj->id);
+            $stmt->bindValue(':nome', $obj->nome);
+            $stmt->bindValue(':cpf', $obj->cpf);
+            $stmt->bindValue(':datanascimento', $obj->dataNascimento);
+            $stmt->bindValue(':email', $obj->email);
+            $stmt->execute();
+
+            $this->connectionPdo->commit();
+
+            // montando resposta
+            return $this->response(1, 1002);
+        } catch (PDOException $e) {
+
+            $this->connectionPdo->rollBack();
+
+            // montando resposta
+            return $this->response(0, 9003, null, null, $e->getMessage());
+        } finally {
+            // habilitando autocommit
+            parent::autoCommit(1);
+        }
     }
 
     public function delete($obj)
@@ -129,7 +163,7 @@ class UsuarioRepository extends Repository
             $this->connectionPdo->commit();
 
             // montando resposta
-            return $this->response(1, 1002, parent::getLastId());
+            return $this->response(1, 1002);
         } catch (PDOException $e) {
 
             $this->connectionPdo->rollBack();

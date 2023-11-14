@@ -132,6 +132,31 @@ class DesaparecidoRepository extends Repository
         }
     }
 
+    public function listByFilter($obj)
+    {
+        try {
+            $sql = "SELECT * FROM {$this->table} where 1 = 1";
+            if(!empty($obj->nome)){
+                $sql .= " AND nome like '%{$obj->nome}%'";
+            }
+            $sql .= "order by 1";
+
+            $stmt = $this->connectionPdo->prepare($sql);
+            $stmt->execute();
+            $rowCount = $stmt->rowCount();
+            if ($rowCount != 0) {
+                // montando resposta
+                return $this->response(1, 1001, null, $this->convertListToObject($stmt->fetchAll(PDO::FETCH_OBJ)));
+            }
+
+            // montando resposta
+            return $this->response(0, 9005);
+        } catch (PDOException $e) {
+            // montando resposta
+            return $this->response(0, 9006, null, null, $e->getMessage());
+        }
+    }
+
     public function changeSituation($situacao, $id): Object
     {
         // desabilitando autocommit

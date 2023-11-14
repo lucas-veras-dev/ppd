@@ -20,6 +20,7 @@ class UsuarioService extends Service
 
     public function atualizar($obj)
     {
+        return $this->usuarioRepository->update($obj);
     }
 
     public function excluir(Int $id)

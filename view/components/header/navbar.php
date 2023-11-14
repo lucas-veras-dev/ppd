@@ -45,9 +45,9 @@
                             <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-solid fa-user"></i> <?php echo $_SESSION['nome'] ?>
                             </button>
-                            <!-- <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user-pen"></i> Editar</a></li>
-                            </ul> -->
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/usuario/editar/<?php echo $_SESSION['id'] ?>"><i class="fa-solid fa-user-pen"></i> Editar</a></li>
+                            </ul>
                         </div>
                         <a href="/sair" class="btn btn-danger"><i class="fa-solid fa-power-off"></i> Sair</a>
                     <?php endif; ?>

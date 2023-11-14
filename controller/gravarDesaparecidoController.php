@@ -51,7 +51,7 @@ switch ($_POST['action']) {
 
         // verificando se aconteceu algum erro
         if (!$inserirDesaparecido->code) {
-            header('Location: /desaprecido/cadastrar?idMsg=' . $inserirDesaparecido->idMsg);
+            header('Location: /desaparecido/cadastrar?idMsg=' . $inserirDesaparecido->idMsg);
             exit();
         }
 

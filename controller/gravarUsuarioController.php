@@ -13,10 +13,12 @@ $usuarioModel->nome = $_POST['nome'];
 $usuarioModel->cpf = $_POST['cpf'];
 $usuarioModel->dataNascimento = $_POST['data_nascimento'];
 $usuarioModel->email = $_POST['email'];
-$usuarioModel->senha = md5($_POST['senha']);
 
 switch ($_POST['action']) {
     case 'inserir':
+        // atribuindo senha
+        $usuarioModel->senha = md5($_POST['senha']);
+
         // inserindo usuario
         $inserirUsuario = $usuarioService->inserir($usuarioModel);
 
@@ -29,5 +31,14 @@ switch ($_POST['action']) {
         // se foi sucesso
         header('Location: /entrar?idMsg=' . $inserirUsuario->idMsg);
         break;
-}
 
+    case 'atualizar':
+        // atribuindo id
+        $usuarioModel->id = $_POST['id'];
+
+        // inserindo usuario
+        $inserirUsuario = $usuarioService->atualizar($usuarioModel);
+
+        header('Location: /usuario/editar/' . $_POST['id'] . '?idMsg=' . $inserirUsuario->idMsg);
+        break;
+}

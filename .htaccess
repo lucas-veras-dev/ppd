@@ -14,6 +14,8 @@ RewriteRule ^admin/?$ view/admin/viewAdmin.php [NC,L]
 # USUÁRIO
 # View cadastrar usuário
 RewriteRule ^usuario/cadastrar/?$ view/signup/viewRegisterUser.php [NC,L]
+# View editar usuário
+RewriteRule ^usuario/editar/([0-9]+)/?$ view/signup/viewRegisterUser.php?id=$1 [NC,L]
 # Controller cadastrar, editar e deletar usuário
 RewriteRule ^usuario/gravar/?$ controller/gravarUsuarioController.php [NC,L]
 # Controller logar usuário

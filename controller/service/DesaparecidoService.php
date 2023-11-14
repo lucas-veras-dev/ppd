@@ -43,6 +43,11 @@ class DesaparecidoService extends Service
         return $this->desaparecidoRepository->listByActive();
     }
 
+    public function listarPorFiltro($obj)
+    {
+        return $this->desaparecidoRepository->listByFilter($obj);
+    }
+
     public function alterarSituacao($situacao, $id)
     {
         return $this->desaparecidoRepository->changeSituation($situacao, $id);

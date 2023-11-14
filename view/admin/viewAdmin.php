@@ -74,11 +74,15 @@ if ($_GET['action'] == 'listar-usuarios') {
                             <td><?php echo $linhas->situacao ?></td>
                             <td><?php echo $linhas->perfil->perfil ?></td>
                             <td>
-                                <?php if ($linhas->situacao != 'A') : ?>
-                                    <a href="/controller/alterarSituacaoController.php?id=<?php echo $linhas->id ?>&tipo=usuario&acao=A"><button type="button" class="btn btn-outline-success">Ativar</button></a>
-                                <?php else : ?>
-                                    <a href="/controller/alterarSituacaoController.php?id=<?php echo $linhas->id ?>&tipo=usuario&acao=I"><button type="button" class="btn btn-outline-danger">Desativar</button></a>
-                                <?php endif; ?>
+                                <div class="btn-group" role="group">
+                                    <?php if ($linhas->situacao != 'A') : ?>
+                                        <a href="/controller/alterarSituacaoController.php?id=<?php echo $linhas->id ?>&tipo=usuario&acao=A" class="btn btn-outline-success"><i class="fa-solid fa-toggle-on"></i> Ativar</a>
+                                    <?php else : ?>
+                                        <a href="/controller/alterarSituacaoController.php?id=<?php echo $linhas->id ?>&tipo=usuario&acao=I" class="btn btn-outline-secondary"><i class="fa-solid fa-toggle-off"></i> Desativar</a>
+                                    <?php endif; ?>
+                                    <a href="/usuario/editar/<?php echo $linhas->id ?>" class="btn btn-outline-primary"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                    <a href="/usuario/excluir/<?php echo $linhas->id ?>" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i> Excluir</a>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -105,11 +109,15 @@ if ($_GET['action'] == 'listar-usuarios') {
                             <td><?php echo $linhas->cidade->nome ?></td>
                             <td><?php echo $linhas->situacao ?></td>
                             <td>
-                                <?php if ($linhas->situacao != 'A') : ?>
-                                    <a href="/controller/alterarSituacaoController.php?id=<?php echo $linhas->id ?>&tipo=desaparecido&acao=A"><button type="button" class="btn btn-outline-success">Ativar</button></a>
-                                <?php else : ?>
-                                    <a href="/controller/alterarSituacaoController.php?id=<?php echo $linhas->id ?>&tipo=desaparecido&acao=I"><button type="button" class="btn btn-outline-danger">Desativar</button></a>
-                                <?php endif; ?>
+                                <div class="btn-group" role="group">
+                                    <?php if ($linhas->situacao != 'A') : ?>
+                                        <a href="/controller/alterarSituacaoController.php?id=<?php echo $linhas->id ?>&tipo=desaparecido&acao=A" class="btn btn-outline-success"><i class="fa-solid fa-toggle-on"></i> Ativar</a>
+                                    <?php else : ?>
+                                        <a href="/controller/alterarSituacaoController.php?id=<?php echo $linhas->id ?>&tipo=desaparecido&acao=I" class="btn btn-outline-secondary"><i class="fa-solid fa-toggle-off"></i> Desativar</a>
+                                    <?php endif; ?>
+                                    <a href="/desaparecido/editar?id=<?php echo $linhas->id ?>" class="btn btn-outline-primary"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                    <a href="/desaparecido/excluir?id=<?php echo $linhas->id ?>" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i> Excluir</a>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>
