@@ -1,0 +1,42 @@
+RewriteEngine On # Turn on the rewriting engine
+
+# Acessar a página principal
+RewriteRule ^/?$ index.php [NC,L]
+# Acessar a página de entrar (logar)
+RewriteRule ^entrar/?$ view/signin/viewSignIn.php [NC,L]
+# Controller parar sair (deslogar)
+RewriteRule ^sair/?$ controller/sairController.php [NC,L]
+
+# ADMIN
+# Acessar página de admin
+RewriteRule ^admin/?$ view/admin/viewAdmin.php [NC,L]
+
+# USUÁRIO
+# View cadastrar usuário
+RewriteRule ^usuario/cadastrar/?$ view/signup/viewRegisterUser.php [NC,L]
+# View editar usuário
+RewriteRule ^usuario/editar/([0-9]+)/?$ view/signup/viewRegisterUser.php?id=$1 [NC,L]
+# Controller cadastrar, editar e deletar usuário
+RewriteRule ^usuario/gravar/?$ controller/gravarUsuarioController.php [NC,L]
+# Controller logar usuário
+RewriteRule ^usuario/logar/?$ controller/logarController.php [NC,L]
+
+# DESAPARECIDO
+# View cadastrar desaparecido
+RewriteRule ^desaparecido/cadastrar/?$ view/register-missing/viewRegisterMissing.php [NC,L]
+# View editar desaparecido
+RewriteRule ^desaparecido/editar/([0-9]+)/?$ view/register-missing/viewRegisterMissing.php?id=$1 [NC,L]
+# Controller cadastrar, editar e deletar desaparecido
+RewriteRule ^desaparecido/gravar/?$ controller/gravarDesaparecidoController.php [NC,L]
+
+###### Exemplos de uso ######
+# API Particao
+##RewriteRule ^particao/?$ particao.php [NC,L]
+##RewriteRule ^particao/([0-9]+)/?$ particao.php?id=$1 [NC,L]
+##RewriteRule ^particao/([0-9]+)/([0-9]+)/?$ particao.php?cliente_id=$1&controlador_id=$2 [NC,L]
+# API Controlador
+##RewriteRule ^controlador/?$ controlador.php [NC,L]
+##RewriteRule ^controlador/([0-9]+)/?$ controlador.php?id=$1 [NC,L]
+##RewriteRule ^controlador/cliente/([0-9]+)/?$ controlador.php?cliente_id=$1 [NC,L]
+##RewriteRule ^controlador/serie/(.*)/?$ controlador.php?serie=$1 [NC,L]
+##RewriteRule ^controlador/nome/(.*)/?$ controlador.php?nome=$1 [NC,L]

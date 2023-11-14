@@ -1,0 +1,17 @@
+/* imagem */
+#homeImg {
+    width: 250px;
+}
+
+/* propriedades */
+.w-100 {
+    width: 100%;
+}
+
+.card-img-desaparecidos {
+    height: 250px;
+}
+
+.navbar {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
