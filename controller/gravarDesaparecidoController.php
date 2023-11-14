@@ -80,6 +80,6 @@ switch ($_REQUEST['action']) {
         // deletando desaparecido
         $deletarDesaparecido = $desaparecidoService->deletar($desaparecidoModel);
 
-        header('Location: /admin?action=listar-desaparecidos&idMsg=' . $deletarUsuario->idMsg);
+        header('Location: /admin?action=listar-desaparecidos&idMsg=' . $deletarDesaparecido->idMsg);
         break;
 }
