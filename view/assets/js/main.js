@@ -1,3 +1,8 @@
+$(document).ready(function () {
+    $('.cpf').mask('000.000.000-00');
+    $('.telefone').mask('(00) 99999-9999');
+});
+
 function permitirApenasNumeros(event) {
     // Obtém o valor atual do campo de entrada
     let valorAtual = event.target.value;

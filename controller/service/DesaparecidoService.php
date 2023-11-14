@@ -20,12 +20,12 @@ class DesaparecidoService extends Service
 
     public function atualizar($obj)
     {
-        
+        return $this->desaparecidoRepository->update($obj);
     }
 
-    public function deletar(Int $id)
+    public function deletar($obj)
     {
-        
+        return $this->desaparecidoRepository->delete($obj);
     }
 
     public function listar()

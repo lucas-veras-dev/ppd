@@ -15,8 +15,14 @@ class UsuarioRepository extends Repository
     public function __construct()
     {
         parent::__construct();
+        $this->autoCommit(0);
         $this->table = "tb_usuario";
         $this->perfilService = new PerfilService;
+    }
+
+    public function __destruct()
+    {
+        $this->autoCommit(1);
     }
 
     public function convertItemToObject($obj): UsuarioModel
@@ -35,9 +41,6 @@ class UsuarioRepository extends Repository
 
     public function insert($obj): Object
     {
-        // desabilitando autocommit
-        parent::autoCommit(0);
-
         try {
             $sql = "INSERT INTO {$this->table} 
             (nome, cpf, datanascimento, email, senha, TB_PERFIL_id)
@@ -63,17 +66,11 @@ class UsuarioRepository extends Repository
 
             // montando resposta
             return $this->response(0, 9006, null, null, $e->getMessage());
-        } finally {
-            // habilitando autocommit
-            parent::autoCommit(1);
         }
     }
 
     public function update($obj)
     {
-        // desabilitando autocommit
-        parent::autoCommit(0);
-
         try {
             $sql = "UPDATE {$this->table} SET
             nome = :nome,
@@ -101,17 +98,14 @@ class UsuarioRepository extends Repository
 
             // montando resposta
             return $this->response(0, 9003, null, null, $e->getMessage());
-        } finally {
-            // habilitando autocommit
-            parent::autoCommit(1);
         }
     }
 
     public function delete($obj)
     {
-        // desabilitando autocommit
-        parent::autoCommit(0);
-
+        // criando transacoes
+        $this->beginTransaction();
+        
         try {
             // deletando desaparecidos
             $sql = "DELETE FROM tb_desaparecido WHERE TB_USUARIO_id = :TB_USUARIO_id";
@@ -135,9 +129,6 @@ class UsuarioRepository extends Repository
 
             // montando resposta
             return $this->response(0, 9003, null, null, $e->getMessage());
-        } finally {
-            // habilitando autocommit
-            parent::autoCommit(1);
         }
     }
 
@@ -176,9 +167,6 @@ class UsuarioRepository extends Repository
 
     public function changeSituation($situacao, $id): Object
     {
-        // desabilitando autocommit
-        parent::autoCommit(0);
-
         try {
             $sql = "UPDATE {$this->table} SET
             situacao = :situacao
@@ -200,9 +188,6 @@ class UsuarioRepository extends Repository
 
             // montando resposta
             return $this->response(0, 9003, null, null, $e->getMessage());
-        } finally {
-            // habilitando autocommit
-            parent::autoCommit(1);
         }
     }
 }

@@ -58,9 +58,10 @@ abstract class Repository
     public function autoCommit(Bool $status)
     {
         $this->connectionPdo->setAttribute(PDO::ATTR_AUTOCOMMIT, $status);
-        if (!$status) {
-            $this->connectionPdo->beginTransaction();
-        }
+    }
+
+    public function beginTransaction(){
+        $this->connectionPdo->beginTransaction();
     }
 
     public abstract function convertItemToObject($obj);

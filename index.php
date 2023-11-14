@@ -68,9 +68,12 @@ if (!empty($_GET['pesquisa_nome'])) {
                                         <h5 class="card-title"><?php echo $linhas->nome ?></h5>
                                         <p class="card-text fw-bold">Local de desaparecimento:</p>
                                         <p><?php echo $linhas->localDesaparecimento ?></p>
-
                                         <p class="card-text fw-bold">Descricao:</p>
                                         <p><?php echo $linhas->descricao ?></p>
+                                        <p class="card-text fw-bold">Telefone para contato:</p>
+                                        <p><?php echo $linhas->telefoneContato ?></p>
+                                        <p class="card-text fw-bold">Email para contato:</p>
+                                        <p><?php echo $linhas->emailContato ?></p>
                                     </div>
                                     <div class="card-footer">
                                         <small class="text-body-secondary"><i class="fa-solid fa-location-dot"></i> <?php echo $linhas->cidade->nome . ' - ' . $linhas->cidade->estado->uf ?></small>

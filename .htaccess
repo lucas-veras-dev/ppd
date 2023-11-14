@@ -24,6 +24,8 @@ RewriteRule ^usuario/logar/?$ controller/logarController.php [NC,L]
 # DESAPARECIDO
 # View cadastrar desaparecido
 RewriteRule ^desaparecido/cadastrar/?$ view/register-missing/viewRegisterMissing.php [NC,L]
+# View editar desaparecido
+RewriteRule ^desaparecido/editar/([0-9]+)/?$ view/register-missing/viewRegisterMissing.php?id=$1 [NC,L]
 # Controller cadastrar, editar e deletar desaparecido
 RewriteRule ^desaparecido/gravar/?$ controller/gravarDesaparecidoController.php [NC,L]
 

@@ -88,6 +88,10 @@ if ($_GET['action'] == 'listar-usuarios') {
                     <?php endforeach; ?>
                 </tbody>
             </table>
+        <?php elseif ($_GET['action'] == 'listar-usuarios') : ?>
+            <div class="alert alert-warning w-100" role="alert">
+                Nenhum usuário encontrado.
+            </div>
         <?php endif; ?>
 
         <?php if (!empty($dadosDesaparecidos)) : ?>
@@ -115,14 +119,18 @@ if ($_GET['action'] == 'listar-usuarios') {
                                     <?php else : ?>
                                         <a href="/controller/alterarSituacaoController.php?id=<?php echo $linhas->id ?>&tipo=desaparecido&acao=I" class="btn btn-outline-secondary"><i class="fa-solid fa-toggle-off"></i> Desativar</a>
                                     <?php endif; ?>
-                                    <a href="/desaparecido/editar?id=<?php echo $linhas->id ?>" class="btn btn-outline-primary"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
-                                    <a href="/desaparecido/excluir?id=<?php echo $linhas->id ?>" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i> Excluir</a>
+                                    <a href="/desaparecido/editar/<?php echo $linhas->id ?>" class="btn btn-outline-primary"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                                    <a href="/desaparecido/gravar?action=deletar&id=<?php echo $linhas->id ?>" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i> Excluir</a>
                                 </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
+        <?php elseif ($_GET['action'] == 'listar-desaparecidos') : ?>
+            <div class="alert alert-warning w-100" role="alert">
+                Nenhum desaparecido encontrado.
+            </div>
         <?php endif; ?>
     </div>
 

@@ -40,7 +40,7 @@ if (!empty($_SESSION['id']) && !empty($_GET['id'])) {
             </div>
             <div class="col-md-6">
                 <label for="cpf" class="form-label">CPF</label>
-                <input oninput="permitirApenasNumeros(event)" type="text" class="form-control" id="cpf" name="cpf" value="<?php echo !empty($listarUsuario->cpf) ? $listarUsuario->cpf : null ?>" minlength="11" maxlength="11" required>
+                <input oninput="permitirApenasNumeros(event)" type="text" class="form-control cpf" id="cpf" name="cpf" value="<?php echo !empty($listarUsuario->cpf) ? $listarUsuario->cpf : null ?>" minlength="11" maxlength="11" required>
             </div>
             <div class="col-md-6">
                 <label for="dataNascimento" class="form-label">Data de Nascimento</label>

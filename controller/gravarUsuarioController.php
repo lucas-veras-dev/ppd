@@ -36,7 +36,7 @@ switch ($_REQUEST['action']) {
         // atribuindo id
         $usuarioModel->id = $_REQUEST['id'];
 
-        // inserindo usuario
+        // atualizando usuario
         $atualizarUsuario = $usuarioService->atualizar($usuarioModel);
 
         header('Location: /usuario/editar/' . $_REQUEST['id'] . '?idMsg=' . $atualizarUsuario->idMsg);
@@ -46,7 +46,7 @@ switch ($_REQUEST['action']) {
         // atribuindo id
         $usuarioModel->id = $_REQUEST['id'];
 
-        // inserindo usuario
+        // deletando usuario
         $deletarUsuario = $usuarioService->deletar($usuarioModel);
 
         header('Location: /admin?action=listar-usuarios&idMsg=' . $deletarUsuario->idMsg);

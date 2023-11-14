@@ -17,9 +17,16 @@ class DesaparecidoRepository extends Repository
     public function __construct()
     {
         parent::__construct();
+        $this->autoCommit(0);
         $this->table = "tb_desaparecido";
         $this->cidadeService = new CidadeService;
         $this->usuarioService = new UsuarioService;
+    }
+
+    public function __destruct()
+    {
+        $this->connectionPdo->commit();
+        $this->autoCommit(1);
     }
 
     public function convertItemToObject($obj): DesaparecidoModel
@@ -47,9 +54,6 @@ class DesaparecidoRepository extends Repository
 
     public function insert($obj): Object
     {
-        // desabilitando autocommit
-        parent::autoCommit(0);
-
         try {
             $sql = "INSERT INTO {$this->table} 
             (nome_foto, nome, sexo, datanascimento, localdesaparecimento, descricao,
@@ -87,18 +91,73 @@ class DesaparecidoRepository extends Repository
 
             // montando resposta
             return $this->response(0, 9006, null, null, $e->getMessage());
-        } finally {
-            // habilitando autocommit
-            parent::autoCommit(1);
         }
     }
 
     public function update($obj)
     {
+        try {
+            $sql = "UPDATE {$this->table} SET
+             nome = :nome,
+             sexo = :sexo,
+             datanascimento = :datanascimento,
+             localdesaparecimento = :localdesaparecimento,
+             descricao = :descricao,
+             cpf = :cpf,
+             numeroboletim = :numeroboletim,
+             telefonecontato = :telefonecontato,
+             emailcontato = :emailcontato,
+             TB_CIDADE_id = :TB_CIDADE_id
+             WHERE
+             id = :id";
+
+            $stmt = $this->connectionPdo->prepare($sql);
+            $stmt->bindValue(':id', $obj->id);
+            $stmt->bindValue(':nome', $obj->nome);
+            $stmt->bindValue(':sexo', $obj->sexo);
+            $stmt->bindValue(':datanascimento', $obj->dataNascimento);
+            $stmt->bindValue(':localdesaparecimento', $obj->localDesaparecimento);
+            $stmt->bindValue(':descricao', $obj->descricao);
+            $stmt->bindValue(':cpf', $obj->cpf);
+            $stmt->bindValue(':numeroboletim', $obj->numeroBoletim);
+            $stmt->bindValue(':telefonecontato', $obj->telefoneContato);
+            $stmt->bindValue(':emailcontato', $obj->emailContato);
+            $stmt->bindValue(':TB_CIDADE_id', $obj->cidade->id);
+            $stmt->execute();
+
+            $this->connectionPdo->commit();
+
+            // montando resposta
+            return $this->response(1, 1002);
+        } catch (PDOException $e) {
+
+            $this->connectionPdo->rollBack();
+
+            // montando resposta
+            return $this->response(0, 9003, null, null, $e->getMessage());
+        }
     }
 
     public function delete($obj)
     {
+        try {
+            $sql = "DELETE FROM {$this->table} WHERE id = :id";
+
+            $stmt = $this->connectionPdo->prepare($sql);
+            $stmt->bindValue(':id', $obj->id);
+            $stmt->execute();
+
+            $this->connectionPdo->commit();
+
+            // montando resposta
+            return $this->response(1, 1004);
+        } catch (PDOException $e) {
+
+            $this->connectionPdo->rollBack();
+
+            // montando resposta
+            return $this->response(0, 9003, null, null, $e->getMessage());
+        }
     }
 
     public function list()
@@ -136,7 +195,7 @@ class DesaparecidoRepository extends Repository
     {
         try {
             $sql = "SELECT * FROM {$this->table} where 1 = 1";
-            if(!empty($obj->nome)){
+            if (!empty($obj->nome)) {
                 $sql .= " AND nome like '%{$obj->nome}%'";
             }
             $sql .= "order by 1";
@@ -159,9 +218,6 @@ class DesaparecidoRepository extends Repository
 
     public function changeSituation($situacao, $id): Object
     {
-        // desabilitando autocommit
-        parent::autoCommit(0);
-
         try {
             $sql = "UPDATE {$this->table} SET
             situacao = :situacao
@@ -183,9 +239,6 @@ class DesaparecidoRepository extends Repository
 
             // montando resposta
             return $this->response(0, 9003, null, null, $e->getMessage());
-        } finally {
-            // habilitando autocommit
-            parent::autoCommit(1);
         }
     }
 }
