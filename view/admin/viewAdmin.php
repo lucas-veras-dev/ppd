@@ -29,7 +29,7 @@ if ($_GET['action'] == 'listar-usuarios') {
 
 <head>
     <meta charset="utf-8">
-    <title>PPD - Entrar</title>
+    <title>PPD - Admin</title>
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="">
@@ -81,7 +81,7 @@ if ($_GET['action'] == 'listar-usuarios') {
                                         <a href="/controller/alterarSituacaoController.php?id=<?php echo $linhas->id ?>&tipo=usuario&acao=I" class="btn btn-outline-secondary"><i class="fa-solid fa-toggle-off"></i> Desativar</a>
                                     <?php endif; ?>
                                     <a href="/usuario/editar/<?php echo $linhas->id ?>" class="btn btn-outline-primary"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
-                                    <a href="/usuario/excluir/<?php echo $linhas->id ?>" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i> Excluir</a>
+                                    <a href="/usuario/gravar?action=deletar&id=<?php echo $linhas->id ?>" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i> Excluir</a>
                                 </div>
                             </td>
                         </tr>

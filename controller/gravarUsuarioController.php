@@ -9,15 +9,15 @@ $usuarioModel = new UsuarioModel();
 $usuarioService = new UsuarioService();
 
 // setando objeto usuario
-$usuarioModel->nome = $_POST['nome'];
-$usuarioModel->cpf = $_POST['cpf'];
-$usuarioModel->dataNascimento = $_POST['data_nascimento'];
-$usuarioModel->email = $_POST['email'];
+$usuarioModel->nome = !empty($_REQUEST['nome']) ? $_REQUEST['nome'] : null;
+$usuarioModel->cpf = !empty($_REQUEST['cpf']) ? $_REQUEST['cpf'] : null;
+$usuarioModel->dataNascimento = !empty($_REQUEST['data_nascimento']) ? $_REQUEST['data_nascimento'] : null;
+$usuarioModel->email = !empty($_REQUEST['email']) ? $_REQUEST['email'] : null;
 
-switch ($_POST['action']) {
+switch ($_REQUEST['action']) {
     case 'inserir':
         // atribuindo senha
-        $usuarioModel->senha = md5($_POST['senha']);
+        $usuarioModel->senha = md5($_REQUEST['senha']);
 
         // inserindo usuario
         $inserirUsuario = $usuarioService->inserir($usuarioModel);
@@ -34,11 +34,21 @@ switch ($_POST['action']) {
 
     case 'atualizar':
         // atribuindo id
-        $usuarioModel->id = $_POST['id'];
+        $usuarioModel->id = $_REQUEST['id'];
 
         // inserindo usuario
-        $inserirUsuario = $usuarioService->atualizar($usuarioModel);
+        $atualizarUsuario = $usuarioService->atualizar($usuarioModel);
 
-        header('Location: /usuario/editar/' . $_POST['id'] . '?idMsg=' . $inserirUsuario->idMsg);
+        header('Location: /usuario/editar/' . $_REQUEST['id'] . '?idMsg=' . $atualizarUsuario->idMsg);
+        break;
+
+    case 'deletar':
+        // atribuindo id
+        $usuarioModel->id = $_REQUEST['id'];
+
+        // inserindo usuario
+        $deletarUsuario = $usuarioService->deletar($usuarioModel);
+
+        header('Location: /admin?action=listar-usuarios&idMsg=' . $deletarUsuario->idMsg);
         break;
 }

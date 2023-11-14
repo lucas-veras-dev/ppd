@@ -23,7 +23,7 @@ class DesaparecidoService extends Service
         
     }
 
-    public function excluir(Int $id)
+    public function deletar(Int $id)
     {
         
     }

@@ -23,8 +23,9 @@ class UsuarioService extends Service
         return $this->usuarioRepository->update($obj);
     }
 
-    public function excluir(Int $id)
+    public function deletar($obj)
     {
+        return $this->usuarioRepository->delete($obj);
     }
 
     public function listar()

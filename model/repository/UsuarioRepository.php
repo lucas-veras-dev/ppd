@@ -109,6 +109,36 @@ class UsuarioRepository extends Repository
 
     public function delete($obj)
     {
+        // desabilitando autocommit
+        parent::autoCommit(0);
+
+        try {
+            // deletando desaparecidos
+            $sql = "DELETE FROM tb_desaparecido WHERE TB_USUARIO_id = :TB_USUARIO_id";
+            $stmt = $this->connectionPdo->prepare($sql);
+            $stmt->bindValue(':TB_USUARIO_id', $obj->id);
+            $stmt->execute();
+
+            // deletando usuário
+            $sql = "DELETE FROM {$this->table} WHERE id = :id";
+            $stmt = $this->connectionPdo->prepare($sql);
+            $stmt->bindValue(':id', $obj->id);
+            $stmt->execute();
+
+            $this->connectionPdo->commit();
+
+            // montando resposta
+            return $this->response(1, 1004);
+        } catch (PDOException $e) {
+
+            $this->connectionPdo->rollBack();
+
+            // montando resposta
+            return $this->response(0, 9003, null, null, $e->getMessage());
+        } finally {
+            // habilitando autocommit
+            parent::autoCommit(1);
+        }
     }
 
     public function list()
